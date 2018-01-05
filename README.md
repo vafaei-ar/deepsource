@@ -22,11 +22,6 @@ Before training, it provides a deman map from true catalogs. The edge and top vi
   <img src="./images/top_view.jpg" width="700"/>
 </p>
 
-**Theorem**: The translation $[\![e]\!]$ given by
-\begin{align*}
-\text{S}1(N) = \sum{p=1}^N \text{E}(p)
-\end{align*}
-
 <p align="center">
   <img src="./images/alpha_s2n.jpg" width="700"/>
 </p>
