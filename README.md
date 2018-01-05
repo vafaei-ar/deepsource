@@ -1,6 +1,10 @@
 DeepSource9
 =======
 
+<p align="center">
+  <img src="./images/edge_view.jpg" width="350"/>
+</p>
+
 ![Alt text](./images/edge_view.jpg?raw=true "Title")
 
 ![Alt text](./images/top_view.jpg?raw=true "Title")
