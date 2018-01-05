@@ -31,7 +31,7 @@ Before training, it provides a deman map from true catalogs. The edge and top vi
 </p>
 
 <p align="center">
-  <img src="./images/Network_2.jpg" width="700"/>
+  <img src="./images/Network_2.jpg" width="600"/>
 </p>
 
 <p align="center">
