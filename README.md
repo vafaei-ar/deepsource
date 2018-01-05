@@ -22,7 +22,7 @@ Before training, it provides a deman map from true catalogs. The edge and top vi
   <img src="./images/top_view.jpg" width="700"/>
 </p>
 
-Let $\text{S}_1(N) = \sum_{p=1}^N \text{E}(p)$
+"Let $\text{S}1(N) = \sum{p=1}^N \text{E}(p)$"
 
 <p align="center">
   <img src="./images/alpha_s2n.jpg" width="700"/>
