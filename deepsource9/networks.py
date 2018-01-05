@@ -8,13 +8,58 @@ from preprocessors import preprocess
 
 class ConvolutionalLayers(object):
 	"""
-	ConvolutionalLayers class: This class provides you define, train, restore and operate a sequential convolutional neural network.
-	nl (default=400): 
-	learning_rate (default=0.001): 
-	n_channel (default=1): 
-	restore (default=False): 
-	model_add (default='./model'): 
-	arch_file_name (default=None): 
+	CLASS ConvolutionalLayers: This class provides you to define, train, restore and operate a sequential convolutional neural network.
+	
+	--------
+	METHODS:
+	
+	__init__:
+	|	Arguments:
+	| 	nl (default=400): input layer size.
+	| 	learning_rate (default=0.001): learning rate.
+	| 	n_channel (default=1): number of channels in input layer.
+	| 	restore (default=False): restore flag.
+	| 	model_add (default='./model'): saved model address / the address trained model will be saved.
+	| 	arch_file_name (default=None): name of the architecture file. This file should be designed similar to the sample and located in same directory with the script.
+	
+	restore:
+	This method restores a saved model with specific architecture.
+	|	Arguments:
+	| 	No argument. 
+	
+	|	Returns:
+	|		null
+	
+	train:
+	This method trains CNN.
+	|	Arguments:
+	| 	data_provider: data provider class to feed CNN.
+	|		training_epochs (default=1): number of training epochs.
+	|		n_s (default=1): number of used image(s) in each epoch.
+	|		dropout (default=0.5): dropout.
+	|		time_limit (default=None): time limit of training in minutes.
+	
+	|	Returns:
+	|		null
+	
+	conv:
+	This method convolve an image using trained network.
+	|	Arguments:
+	|		x_in: input image.
+	
+	| Returns:
+	|		2D convolved image.
+	
+	conve large image:
+	This method convolve a large image using trained network.
+	|	Arguments:
+	|		xsm: input image.
+	|		pad (default=10): shared pad between windows.
+	|		lw (default=400):	window size.
+	
+	| Returns:
+	|		2D convolved image.
+	
 	"""
 	def __init__(self,nl=400,learning_rate = 0.001,n_channel=1,restore=False,model_add='./model',arch_file_name=None):
 
@@ -142,7 +187,41 @@ class ConvolutionalLayers(object):
 ###############################################
 
 class SW_Network(object):
-
+	"""
+	CLASS SW_Network: This class provides you to define, train, restore and operate a sliding convolutional neural network. (This class in under construction!!!)
+	
+	--------
+	METHODS:
+	
+	__init__:
+	|	Arguments:
+	| 	nl (default=400): input layer size.
+	| 	learning_rate (default=0.001): learning rate.
+	| 	n_channel (default=1): number of channels in input layer.
+	| 	restore (default=False): restore flag.
+	| 	model_add (default='./model'): saved model address / the address trained model will be saved.
+	| 	arch_file_name (default=None): name of the architecture file. This file should be designed similar to the sample and located in same directory with the script.
+	
+	restore:
+	This method restores a saved model with specific architecture.
+	|	Arguments:
+	| 	No argument. 
+	
+	|	Returns:
+	|		null
+	
+	train:
+	This method trains CNN.
+	|	Arguments:
+	| 	data_provider: data provider class to feed CNN.
+	|		training_epochs (default=1): number of training epochs.
+	|		n_s (default=1): number of used image(s) in each epoch.
+	|		dropout (default=0.5): dropout.
+	|		time_limit (default=None): time limit of training in minutes.
+	
+	|	Returns:
+	|		null
+	"""
 	def __init__(self,arch,learning_rate = 0.01,n_ch = 46,hlp=15,pp_conv=True,restore=False,model_add='./model',conv_add=''):
 
 		self.arch = arch

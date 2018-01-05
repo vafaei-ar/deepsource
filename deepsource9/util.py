@@ -8,19 +8,35 @@ from astropy import wcs, coordinates
 from scipy.ndimage.filters import gaussian_filter
 
 def standard(X):
+	"""
+	standard : This function makes data ragbe between 0 and 1.
+	
+	Arguments:
+		X (numoy array) : input data.
+	
+	--------
+	Returns:
+		standard data.
+	"""
 	xmin = X.min()
 	X = X-xmin
 	xmax = X.max()
 	X = X/xmax
 	return X
 
-def fetch_data(image_file,model_file,standarding=True):
+def fetch_data(image_file,model_file,do_standard=True):
     
 	"""
 	fetch_data : This function reads image and model.
-	image_file : path to image file. 
-	model_file : path to model file. 
-	standarding (Default=True) : if true, minimum/maximum value of image will be set to 0/1.
+	
+	Arguments:
+		image_file (string) : path to image file. 
+		model_file (string) : path to model file. 
+		do_standard (logical) (default=True) : if true, minimum/maximum value of image will be set to 0/1.
+		
+	--------
+	Returns:
+		image, x coordinates, y coordinates 
 	"""
     
 	with fits.open(image_file) as hdulist:
@@ -41,30 +57,36 @@ def fetch_data(image_file,model_file,standarding=True):
 	xy_coords = coord_sys.wcs_world2pix(coords_ar, 0)
 	x_coords, y_coords = xy_coords[:,0], xy_coords[:,1]
 
-	if standarding==True:
+	if do_standard==True:
 		data = standard(data)
 
 	return np.moveaxis(data, 0, -1), x_coords, y_coords
 
-def fetch_data_3ch(image_file,model_file,standarding=True):
+def fetch_data_3ch(image_file,model_file,do_standard=True):
     
 	"""
 	fetch_data_3ch : This function reads 3 images of 3 robust and model.
-	image_file : path to robust 0 image file. 
-	model_file : path to model file. 
-	standarding (Default=True) : if true, minimum/maximum value of image will be set to 0/1.
+	
+	Arguments:
+		image_file (string) : path to robust 0 image file. 
+		model_file (string) : path to model file. 
+		do_standard (logical) (default=True) : if true, minimum/maximum value of image will be set to 0/1.
+		
+	--------
+	Returns:
+		image, x coordinates, y coordinates 
 	"""
 
-	data0, x_coords, y_coords = fetch_data(image_file,model_file,standarding=standarding)
+	data0, x_coords, y_coords = fetch_data(image_file,model_file,do_standard=do_standard)
 #	lx,ly = data0[0,:,:,0].shape
 
 	try:
-		  data1, x_coords, y_coords = fetch_data(image_file.replace('robust-0','robust-1'),model_file,standarding=standarding)
+		  data1, x_coords, y_coords = fetch_data(image_file.replace('robust-0','robust-1'),model_file,do_standard=do_standard)
 	except:
 		assert 0,'Robust 1 does not exist.'
 		  
 	try:
-		  data2, x_coords, y_coords = fetch_data(image_file.replace('robust-0','robust-2'),model_file,standarding=standarding)
+		  data2, x_coords, y_coords = fetch_data(image_file.replace('robust-0','robust-2'),model_file,do_standard=do_standard)
 	except:
 		assert 0,'Robust 1 does not exist.'
 
@@ -73,10 +95,16 @@ def fetch_data_3ch(image_file,model_file,standarding=True):
 def cat2map(lx,ly,x_coords,y_coords):
 	"""
 	cat2map : This function converts a catalog to a 0/1 map which are representing background/point source.
-	lx : number of pixelds of the image in first dimension.
-	ly : number of pixelds of the image in second dimension.
-	x_coords: list of the first dimension of point source positions. 
-	y_coords : list of the second dimension of point source positions. 
+	
+	Arguments:
+		lx (int): number of pixels of the image in first dimension.
+		ly (int): number of pixels of the image in second dimension.
+		x_coords (numpy array): list of the first dimension of point source positions. 
+		y_coords (numpy array): list of the second dimension of point source positions. 
+	
+	--------
+	Returns:
+		catalog image as nupmy array.
 	"""
 	cat = np.zeros((lx,ly))
 	for i,j in zip(x_coords.astype(int), y_coords.astype(int)):
@@ -85,10 +113,16 @@ def cat2map(lx,ly,x_coords,y_coords):
 
 def magnifier(y,radius=15,value=1):
 	"""
-	magnifier : This function magnifies any pixel with value one by a given value.
-	y : input 2D map.
-	radius (Default=15) : radius of magnification.
-	value (Default=True) : 
+	magnifier (numpy array): This function magnifies any pixel with value one by a given value.
+	
+	Arguments:
+		y : input 2D map.
+		radius (int) (default=15) : radius of magnification.
+		value (float) (default=True) : the value you want to use in magnified pixels.
+		
+	--------
+	Returns:
+		image with magnified objects as numpy array.
 	"""
 	mag = np.zeros(y.shape)
 	for i,j in np.argwhere(y==1):
@@ -99,8 +133,14 @@ def magnifier(y,radius=15,value=1):
 def circle(y,radius=15):
 	"""
 	circle : This function add some circles around any pixel with value one.
-	y : input 2D map.
-	radius (Default=15) : 
+
+	Arguments:
+		y (numpy array): input 2D map.
+		radius (int) (default=15): circle radius.
+		
+	--------
+	Returns:
+		image with circles around objects.
 	"""
 	mag = np.zeros(y.shape)
 	for i,j in np.argwhere(y==1):
@@ -110,9 +150,15 @@ def circle(y,radius=15):
 
 def horn_kernel(y,radius=10,step_height=1):
 	"""
-	horn_kernel : This .
-	y : input 2D map.
-	radius (Default=15) : 
+	horn_kernel : Horn shape kernel.
+	
+	Arguments:
+		y (numpy array): input 2D map.
+		radius (int) (default=15): effective radius of kernel.
+	
+	--------
+	Returns:
+		kerneled image.
 	"""
 	mag = np.zeros(y.shape)
 	for r in range(1,radius):
@@ -123,16 +169,28 @@ def horn_kernel(y,radius=10,step_height=1):
 
 def gaussian_kernel(y,sigma=7):
 	"""
-	gaussian_kernel : Gaussian filter.
-	y : input 2D map.
-	sigma (Default=7) : effective length of Gaussian smoothing.
+	gaussian_kernel: Gaussian filter.
+	
+	Arguments:
+		y (numpy array): input 2D map.
+		sigma (float) (default=7): effective length of Gaussian smoothing.
+		
+	--------
+	Returns:
+		kerneled image.
 	"""
 	return gaussian_filter(y, sigma)
 
 def ch_mkdir(directory):
 	"""
 	ch_mkdir : This function creates a directory if it does not exist.
-	directory : Path to the directory.
+	
+	Arguments:
+		directory (string): Path to the directory.
+		
+	--------
+	Returns:
+		null.		
 	"""
 	if not os.path.exists(directory):
 		  os.makedirs(directory)

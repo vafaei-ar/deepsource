@@ -6,20 +6,42 @@ from util import fetch_data,fetch_data_3ch,cat2map
 class GeneralDataProvider(object):
     
 	"""
-	PreProcessDataProvider class: This class will provide one channel data (image) to feed CCN.
-	files_path : Path to files. The string will be used in glob to make a list of images. Model files have to be in same directory. 
-	nx, ny : Size of the provided window (number of pixels).
-	kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
-	margin (Default=1000) : Number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
-	b_n (Default=0.05) : Background noise. This parameter controls background of demand map.
-	alpha (Default=0.95) : This parameter determines contribution of image in demand map.
+	CLASS GeneralDataProvider: This class will provide one/multi channel(s) data (image) to feed CCN.
+	
+	--------
+	METHODS:
+	
+	__init__:
+	| arguments:
+	|		images_path: list of paths to the images. The string can be produced by glob to make a list of images. 
+	|		models_path: list of paths to the images. The string can be produced by glob to make a list of images. 
+	|		nx: first dimension size of the provided window (number of pixels).
+	|		ny: second dimension size of the provided window (number of pixels).
+	|		kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
+	|		margin (default=500): number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
+	|		b_n (default=0.05): background noise. This parameter controls background of demand map.
+	|		alpha (default=0.95): this parameter determines contribution of image in demand map.
+	|		d_ch: (default=0): The channel you want to get background noise from.
+	|		sampling (default='random'): This argument still has one option. leave it as default.
+	
+	
+	__call__:
+	This method provides one channel data (image) to feed CCN.
+	| Arguments:
+	|		n (default=1): number of returned patches.
+	|		nx (default=None): first dimension size of the provided window (number of pixels).
+	|		ny (default=None): second dimension size of the provided window (number of pixels).
+	|		coord (default=False): return coordinate of point sources.
+	
+	| Returns:
+	|		Image, Demand map, coordinates (if coord is true)
 	"""
 
-	def __init__(self,images_path,models_path,nx,ny,func,margin=500, b_n=0.05, alpha=0.95, d_ch=0, sampling='random'):
+	def __init__(self,images_path,models_path,nx,ny,kernels,margin=500, b_n=0.05, alpha=0.95, d_ch=0, sampling='random'):
 
 		self.images_path = images_path
 		self.models_path = models_path
-		self.func = func
+		self.func = kernels
 		self.margin = margin
 		self.b_n = b_n
 		self.alpha = alpha
@@ -42,6 +64,7 @@ class GeneralDataProvider(object):
 		print 'number of files: ',self.n_files,', number of channels: ',self.n_channels
 
 	def __call__(self, n=1, nx=None ,ny=None, coord=False):
+	
 		margin = self.margin
 		i_rand = np.random.randint(self.n_files)
 
@@ -121,13 +144,30 @@ class GeneralDataProvider(object):
 class PreProcessDataProvider(object):
     
 	"""
-	PreProcessDataProvider class: This class will provide one channel data (image) to feed CCN.
-	files_path : Path to files. The string will be used in glob to make a list of images. Model files have to be in same directory. 
-	nx, ny : Size of the provided window (number of pixels).
-	kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
-	margin (Default=1000) : Number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
-	b_n (Default=0.05) : Background noise. This parameter controls background of demand map.
-	alpha (Default=0.95) : This parameter determines contribution of image in demand map.
+	CLASS GeneralDataProvider: This class will provide one channel data (image) to feed CCN.
+	
+	--------
+	METHODS:
+	
+	__init__:
+	| arguments:
+	|		files_path: list of paths to the images. The string can be produced by glob to make a list of images. Models have to be in same directory.
+	|		nx: first dimension size of the provided window (number of pixels).
+	|		ny: second dimension size of the provided window (number of pixels).
+	|		kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
+	|		margin (default=1000): number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
+	|		b_n (default=0.05): background noise. This parameter controls background of demand map.
+	|		alpha (default=0.95): this parameter determines contribution of image in demand map.
+		
+	
+	__call__:
+	This method provides one channel data (image) to feed CCN.
+	| Arguments:
+	|		n (default=1): number of returned patches.
+	|		coord (default=False): return coordinate of point sources.
+	
+	| Returns:
+	|		Image, Demand map, coordinates (if coord is true)
 	"""
 
 	def __init__(self,files_path,nx,ny,kernels=[],margin=1000, b_n=0.05, alpha=0.95):
@@ -192,13 +232,30 @@ class PreProcessDataProvider(object):
 class PreProcessDataProvider_3ch(object):
     
 	"""
-	PreProcessDataProvider class: This class will provide three channels data (all robust images) to feed CCN.
-	files_path : Path to robust zero files. The string will be used in glob to make a list of images. Other robust images and model files have to be in same directory. 
-	nx, ny : Size of the provided window (number of pixels).
-	kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
-	margin (Default=1000) : Number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
-	b_n (Default=0.05) : Background noise. This parameter controls background of demand map.
-	alpha (Default=0.95) : This parameter determines contribution of image in demand map.
+	CLASS GeneralDataProvider: This class will provide 3 channels data (image) to feed CCN.
+	
+	--------
+	METHODS:
+	
+	__init__:
+	| arguments:
+	|		files_path: list of paths to the images. The string can be produced by glob to make a list of images. Models have to be in same directory.
+	|		nx: first dimension size of the provided window (number of pixels).
+	|		ny: second dimension size of the provided window (number of pixels).
+	|		kernels: List of kernels you want to operate on model image. Model image is a map with same size of image, point sources pixels are filled by one and zero for the rest.). 
+	|		margin (default=1000): number of pixels you don't want to sample from. Margin will be calculated from borders. For example margin=1000 will not use first and last 1000 pixels of each dimension.)
+	|		b_n (default=0.05): background noise. This parameter controls background of demand map.
+	|		alpha (default=0.95): this parameter determines contribution of image in demand map.
+		
+	
+	__call__:
+	This method provides one channel data (image) to feed CCN.
+	| Arguments:
+	|		n (default=1): number of returned patches.
+	|		coord (default=False): return coordinate of point sources.
+	
+	| Returns:
+	|		Image, Demand map, coordinates (if coord is true)
 	"""
 
 	def __init__(self,files_path,nx,ny,kernels,margin=1000, b_n=0.05, alpha=0.95):

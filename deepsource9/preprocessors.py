@@ -5,6 +5,7 @@ from astropy.stats import sigma_clip
 from astropy.convolution import convolve, AiryDisk2DKernel,Box2DKernel,Gaussian2DKernel,MexicanHat2DKernel
 from astropy.convolution import Ring2DKernel,Tophat2DKernel,TrapezoidDisk2DKernel
 import myroutines as myr
+from util import standard
 
 
 kernels = [AiryDisk2DKernel(3),Box2DKernel(5),Gaussian2DKernel(2),Gaussian2DKernel(4),MexicanHat2DKernel(2)
@@ -17,22 +18,39 @@ kernel_names = ['AiryDisk3','Box5','Gaussian2','Gaussian4',\
 #'rbio2.8','rbio6.8']
 wts = ['db38','sym20','coif17','dmey']
 
-def standard(X):
-	xmin = X.min()
-	X = X-xmin
-	xmax = X.max()
-	X = X/xmax
-	return X
-
 def wavelet(data, wlf, threshold):
-    wavelet = pywt.Wavelet(wlf)
-    levels  = pywt.dwt_max_level(data.shape[0], wavelet)
-    WaveletCoeffs = pywt.wavedec2(data, wavelet, level=levels)
-    NewWaveletCoeffs = map (lambda x: pywt.threshold(x,threshold,'greater'),WaveletCoeffs)
-    data = pywt.waverec2( NewWaveletCoeffs, wavelet)
-    return data
+	"""
+	wavelet: this function .
+	
+	Arguments:
+		data (numpy array): input data.
+		wlf: wavelet fucntion.
+		threshold: threshold of high pass filter.
+		
+	--------
+	Returns:
+		filtered data.	
+	"""
+	wavelet = pywt.Wavelet(wlf)
+	levels  = pywt.dwt_max_level(data.shape[0], wavelet)
+	WaveletCoeffs = pywt.wavedec2(data, wavelet, level=levels)
+	NewWaveletCoeffs = map (lambda x: pywt.threshold(x,threshold,'greater'),WaveletCoeffs)
+	data = pywt.waverec2( NewWaveletCoeffs, wavelet)
+	return data
 
 def preproc(raw,return_names=False,funcs=[]):
+	"""
+	preproc: this function .
+	
+	Arguments:
+		raw (numpy array): input data.
+		return_names (logical) (default=False): If True, the function returns a list of filter names.
+		funcs (list) (default=[]): list of the functions you want to add as channels to the raw data.
+		
+	--------
+	Returns:
+		preprocessed data.	
+	"""
 	d = np.expand_dims(raw, axis=2)
 	names = ['Data']
 	for i,func in enumerate(funcs):
@@ -95,6 +113,18 @@ def preproc(raw,return_names=False,funcs=[]):
 		  return d
 
 def preprocess(X,n_ch=None,funcs=[]):
+	"""
+	preprocess: this function .
+	
+	Arguments:
+		X (numpy array): input data.
+		n_ch (int) (default=None): number of channels (this argument can be set automatically if you leave it None, but if you set it, it can be run faster.).
+		funcs (list) (default=[]): list of the functions you want to add as channels to the raw data.
+		
+	--------
+	Returns:
+		filtered data.	
+	"""
 
 	n_patch = X.shape[0]
 	n_pix = X.shape[1]

@@ -2,3 +2,4 @@ modules = ['preprocessors','sw_provider','cnn_provider','networks','util','ps_ex
 
 for module in modules:
 	exec 'from '+module+' import *'
+
