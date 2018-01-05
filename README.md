@@ -2,20 +2,29 @@ DeepSource9
 =======
 
 <p align="center">
-  <img src="./images/edge_view.jpg" width="350"/>
+  <img src="./images/edge_view.jpg" width="450"/>
 </p>
 
-![Alt text](./images/edge_view.jpg?raw=true "Title")
+<p align="center">
+  <img src="./images/top_view.jpg" width="450"/>
+</p>
 
-![Alt text](./images/top_view.jpg?raw=true "Title")
+<p align="center">
+  <img src="./images/alpha_s2n.jpg" width="450"/>
+</p>
 
-![Alt text](./images/alpha_s2n.jpg?raw=true "Title")
+<p align="center">
+  <img src="./images/Network_1.jpg" width="450"/>
+</p>
 
-![Alt text](./images/Network_1.jpg?raw=true "Title")
+<p align="center">
+  <img src="./images/Network_2.jpg" width="450"/>
+</p>
 
-![Alt text](./images/Network_2.jpg?raw=true "Title")
+<p align="center">
+  <img src="./images/sample.jpg.jpg" width="450"/>
+</p>
 
-![Alt text](./images/sample.jpg?raw=true "Title")
 
 _Python library for _
 
