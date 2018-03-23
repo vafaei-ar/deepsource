@@ -16,15 +16,12 @@ $ cd deepsource9 $ pip install -r requirements.txt $ python setup.py install
 Before training, it provides a deman map from true catalogs. The edge and top view of the demand map is shown below:
 
 <p align="center">
+  <img src="./images/ds9flow.jpg" width="800"/>
+</p>
+
+
+<p align="center">
   <img src="./images/Network_1.jpg" width="700"/>
-</p>
-
-<p align="center">
-  <img src="./images/Network_2.jpg" width="600"/>
-</p>
-
-<p align="center">
-  <img src="./images/sample.jpg" width="700"/>
 </p>
 
 
