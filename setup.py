@@ -5,6 +5,10 @@ import sys
 from setuptools.command.test import test as TestCommand
 from setuptools import find_packages
 
+def remove_dir(dirpath):
+	if os.path.exists(dirpath) and os.path.isdir(dirpath):
+		  shutil.rmtree(dirpath)
+		  
 try:
     from setuptools import setup
 except ImportError:
@@ -16,18 +20,18 @@ tests_require=['pytest>=2.3'] #for testing
 PACKAGE_PATH = os.path.abspath(os.path.join(__file__, os.pardir))
 
 setup(
-    name='deepsource9',
+    name='deepsource',
     version='0.1.0',
     description='Point Source Detection by Deep Learinng',
     author='Alireza',
-    url='https://github.com/vafaeiar/deepsource9',
-    packages=find_packages(PACKAGE_PATH, "deepsource9"),
-    package_dir={'deepsource9': 'deepsource9'},
+    url='https://github.com/vafaeiar/deepsource',
+    packages=find_packages(PACKAGE_PATH, "deepsource"),
+    package_dir={'deepsource': 'deepsource'},
     include_package_data=True,
     install_requires=requires,
     license='GPLv3',
     zip_safe=False,
-    keywords='deepsource9',
+    keywords='deepsource',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         "Intended Audience :: Science/Research",
@@ -41,3 +45,7 @@ setup(
         'Programming Language :: Python :: 3.3',
     ]
 )
+
+remove_dir('build')
+remove_dir('deepsource.egg-info')
+remove_dir('dist')
