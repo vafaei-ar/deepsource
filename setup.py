@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 from setuptools.command.test import test as TestCommand
 from setuptools import find_packages
 
