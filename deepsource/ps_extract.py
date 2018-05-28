@@ -17,21 +17,21 @@ def cent_of_mass(d,filt):
 		center of mass of the object.
 	"""
 
-    indx = np.where(filt)[0]
-    indy = np.where(filt)[1]
-    li = 0
-    lj = 0
-    mass = 0
-    for i,j in zip(indx,indy):
-        val = d[i,j]
-        mass += val
-        li += val*i
-        lj += val*j
-    li /= mass
-    lj /= mass
-    return np.round(np.array([li,lj])).astype(int)
+	indx = np.where(filt)[0]
+	indy = np.where(filt)[1]
+	li = 0
+	lj = 0
+	mass = 0
+	for i,j in zip(indx,indy):
+		  val = d[i,j]
+		  mass += val
+		  li += val*i
+		  lj += val*j
+	li /= mass
+	lj /= mass
+	return np.round(np.array([li,lj])).astype(int)
 
-def ps_blob_detect(xp,loc_det,jump_lim=50,area_lim=10,threshold_0=1.,return_intensity=False,verbose=False):
+def ps_blob_detect(xp,loc_det='mean',jump_lim=50,area_lim=10,threshold_0=1.,return_intensity=False,verbose=False):
 	"""
 	 ps_blob_detect: this function detects the blobs which are candidates to be object.
 	
@@ -48,7 +48,7 @@ def ps_blob_detect(xp,loc_det,jump_lim=50,area_lim=10,threshold_0=1.,return_inte
 	Returns:
 		catalog, intensity (return_intensity==True)
 	"""
-	
+
 	xp = xp-xp.min() 
 	xp = xp/xp.max()
 #2: 15, 20
@@ -92,7 +92,7 @@ def ps_blob_detect(xp,loc_det,jump_lim=50,area_lim=10,threshold_0=1.,return_inte
 		return np.array([xl,yl]).T
 
 def ps_extract(image_file,model_file,cnn,fetch_func,loc_det,ignore_border=600,jump_lim=50,
-               area_lim=10,threshold_0=1.,verbose=False):
+               area_lim=10,threshold_0=1.,lw=400,pad=10,verbose=False):
 	"""
 	ps_extract: this function extracts objects.
 	
@@ -117,9 +117,10 @@ def ps_extract(image_file,model_file,cnn,fetch_func,loc_det,ignore_border=600,ju
 	data, x_coords, y_coords = fetch_func(image_file,model_file)
 
 	# Removing borders
-	data = data[:,ignore_border:-ignore_border,ignore_border:-ignore_border,:]
+	lx,ly = data.shape[1],data.shape[2]
+	data = data[:,ignore_border:lx-ignore_border,ignore_border:ly-ignore_border,:]
 
-	demand_image = cnn.conv_large_image(data,pad=10,lw=400)
+	demand_image = cnn.conv_large_image(data,pad=pad,lw=lw)
 
 	pred = ps_blob_detect(demand_image,loc_det=loc_det,jump_lim=jump_lim,area_lim=area_lim,
 		                        threshold_0=threshold_0,verbose=verbose)
