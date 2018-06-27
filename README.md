@@ -32,6 +32,4 @@ Before training, it provides a demaned map from true catalogs. The edge and top 
 _Python library for _
 
 
-**Documentation:** http://
-
 **Citing DeepSource9:** 
