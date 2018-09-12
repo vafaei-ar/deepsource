@@ -1,0 +1,8 @@
+astropy>=2.0.6
+h5py>=2.7.1
+pandas>=0.23.0
+scikit-image>=0.13.1
+tensorboard>=1.9.0
+tensorflow>=1.9.0
+tqdm>=4.23.4
+
