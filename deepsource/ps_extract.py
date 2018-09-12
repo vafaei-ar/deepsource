@@ -1,8 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import os
 import numpy as np
 from skimage import draw
 from skimage import measure
-from util import fetch_data,standard
+from .utils import fetch_data,standard
 
 def cent_of_mass(d,filt):
 	"""
