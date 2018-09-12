@@ -1,7 +1,7 @@
 DeepSource
 =======
 
-Installation:
+**Installation:**
 
 The project is hosted on GitHub. Get a copy by running:
 ```
