@@ -199,6 +199,24 @@ def ch_mkdir(directory):
 	if not os.path.exists(directory):
 		  os.makedirs(directory)
 
+def the_print(text,style='bold',tc='gray',bgc='red'):
+    """
+    prints table of formatted text format options
+    """
+    colors = ['black','red','green','yellow','blue','purple','skyblue','gray']
+    if style == 'bold':
+        style = 1
+    elif style == 'underlined':
+        style = 4
+    else:
+        style = 0
+    fg = 30+colors.index(tc)
+    bg = 40+colors.index(bgc)
+    
+    form = ';'.join([str(style), str(fg), str(bg)])
+    print('\x1b[%sm %s \x1b[0m' % (form, text))
+
+
 #def ps_extract(xp):
 #	xp = xp-xp.min() 
 #	xp = xp/xp.max()

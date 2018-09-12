@@ -65,7 +65,7 @@ class GeneralDataProvider(object):
         if sampling!='random':
             assert len(images_path)==len(sampling),'Number of images and sample files are different!'
 
-        print 'number of files: ',self.n_files,', number of channels: ',self.n_channels
+        print('number of files: ',self.n_files,', number of channels: ',self.n_channels)
 
     def __call__(self, n=1, nx=None ,ny=None, coord=False):
     
@@ -187,7 +187,7 @@ class PreProcessDataProvider(object):
           self.n_files = len(self.files)
           assert self.n_files>0,'No file found!'
           self.path = "/".join(files_path.split('/')[:-1])+"/"
-          print 'number of files: ',self.n_files
+          print('number of files: ',self.n_files)
 
     def __call__(self, n=1, coord=False):
           margin = self.margin
@@ -274,7 +274,7 @@ class PreProcessDataProvider_3ch(object):
           self.files = glob.glob(files_path)
           self.n_files = len(self.files)
           self.path = "/".join(files_path.split('/')[:-1])+"/"
-          print 'number of files: ',self.n_files
+          print('number of files: ',self.n_files)
 
     def __call__(self, n=1, coord=False):
           margin = self.margin

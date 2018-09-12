@@ -63,7 +63,7 @@ def ps_blob_detect(xp,loc_det='mean',jump_lim=50,area_lim=10,threshold_0=1.,retu
 		blobs = measure.label(xp>tr)
 		nn = np.unique(blobs).shape[0]
 		if verbose:
-			print 'Threshold:',tr,', # of PS:',nnp
+			print('Threshold:',tr,', # of PS:',nnp)
 		if nn-nnp>jump_lim:
 				break
 		nnp = nn
@@ -124,11 +124,11 @@ def ps_extract(image_file,model_file,cnn,fetch_func,loc_det,ignore_border=600,ju
 	lx,ly = data.shape[1],data.shape[2]
 	data = data[:,ignore_border:lx-ignore_border,ignore_border:ly-ignore_border,:]
 
-	demand_image = cnn.conv_large_image(data,pad=pad,lw=lw)
+	demand_image = cnn.conv_large_image(data,pad=pad,lx=lw)
 
 	pred = ps_blob_detect(demand_image,loc_det=loc_det,jump_lim=jump_lim,area_lim=area_lim,
 		                        threshold_0=threshold_0,verbose=verbose)
-	print pred.shape[0],' point sources are found!'
+	print(pred.shape[0],' point sources are found!')
 
 	x_coords, y_coords = pred[:,0].astype(int),pred[:,1].astype(int)
 
@@ -166,7 +166,7 @@ def visualize_cross_match(image_file,model_file,catalog,border=10):
 	crop_filt = (catalog[:,0]>x_coords.min()-border) & (catalog[:,0]<x_coords.max()+border) \
 		              & (catalog[:,1]>y_coords.min()-border) & (catalog[:,1]<y_coords.max()+border)
 
-	print (~crop_filt).sum(),' points are in noisy borders!'
+	print((~crop_filt).sum(),' points are in noisy borders!')
 	catalog_crop = catalog[crop_filt]
 	plt.plot(catalog_crop[:,0],catalog_crop[:,1],ls='none',color='b',marker='x',markersize=5, 
 		      mew=1, markerfacecolor=None,label='pred.')
