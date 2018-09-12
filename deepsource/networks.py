@@ -6,8 +6,7 @@ import os
 import sys
 import numpy as np
 import tensorflow as tf
-from util import ch_mkdir
-from sw_provider import slide_batch
+from .utils import ch_mkdir
 
 class ConvolutionalLayers(object):
     """
