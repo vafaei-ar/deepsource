@@ -175,6 +175,6 @@ def visualize_cross_match(image_file,model_file,catalog,border=10):
 	plt.ylim(y_coords.min()-border,y_coords.max()+border)
 	plt.xticks([])
 	plt.yticks([])
-	plt.title(str(catalog_crop.shape[0])+' out of 300')
+	plt.title(str(catalog_crop.shape[0])+' sources')
 	plt.legend(bbox_to_anchor=(1.3, 1.025))
 
