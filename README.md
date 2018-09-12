@@ -7,11 +7,13 @@ The project is hosted on GitHub. Get a copy by running:
 ```
 $ git clone https://github.com/vafaei-ar/deepsource.git
 ```
-The package is tested on [**Anaconda**](https://www.anaconda.com/download/#linux). Install the package using:
+The package is tested on [**Anaconda**](https://www.anaconda.com/download/#linux). You need to have the packages listed in requirements.txt or you can install them using:
+```
+$ pip install -r requirements.txt 
+```
+Install the package using:
 ```
 $ cd deepsource
-
-$ pip install -r requirements.txt 
 
 $ python setup.py install
 ```
