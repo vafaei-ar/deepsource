@@ -7,7 +7,7 @@ The project is hosted on GitHub. Get a copy by running:
 ```
 $ git clone https://github.com/vafaei-ar/deepsource.git
 ```
-Install the package using:
+We recommend using [**Anaconda**](https://www.anaconda.com/download/#linux) Install the package using:
 ```
 $ cd deepsource
 
