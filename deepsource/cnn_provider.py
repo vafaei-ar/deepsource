@@ -41,7 +41,7 @@ class GeneralDataProvider(object):
     |        Image, Demand map, coordinates (if coord is true)
     """
 
-    def __init__(self,images_path,models_path,nx,ny,kernels=None,margin=500, b_n=0.05, alpha=0.95, d_ch=0, sampling='random'):
+    def __init__(self,images_path,models_path,nx,ny,kernels=None,margin=500, b_n=0.05, alpha=0.95, d_ch=0, sampling='random',ignore_error=False):
 
         self.images_path = images_path
         self.models_path = models_path
@@ -53,6 +53,7 @@ class GeneralDataProvider(object):
         self.sam_p = sampling
         self.nx,self.ny = nx,ny
         self.n_files = len(images_path)
+        self.ignore_error = ignore_error
         assert len(images_path)==len(models_path),'Number of images and model files are different!'
         assert self.n_files>0,'No file found!'
         if type(images_path[0]) is not list :
@@ -79,7 +80,7 @@ class GeneralDataProvider(object):
         model_file = self.models_path[i_rand]
 
         if type(image_file) is not list :
-            data, x_coords, y_coords = fetch_data(image_file,model_file)
+            data, x_coords, y_coords = fetch_data(image_file,model_file,ignore_error=self.ignore_error)
         else:
             data = []
             for i in range(len(image_file)):
