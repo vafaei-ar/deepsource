@@ -65,7 +65,7 @@ def fetch_data(image_file,model_file,do_standard=True,ignore_error=False):
     if ignore_error:
         x_coords, y_coords = x_coords[filt], y_coords[filt]
     else:
-        assert np.sum(filt)==num_sources,'There are some sources out of images! There might be problem in coordinate conversion system.'
+        assert np.sum(filt)==num_sources,'There are some sources out of images! The problem might be in coordinate conversion system or simulation!'
 
     if do_standard==True:
         data = standard(data)
