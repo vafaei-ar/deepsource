@@ -118,7 +118,7 @@ def ps_extract(image_file,model_file,cnn,fetch_func,loc_det,ignore_border=600,ju
 		catalog (includes x, y, pixel values, probability values)
 	"""
 	
-	data, x_coords, y_coords = fetch_func(image_file,model_file)
+	data, _, _ = fetch_func(image_file,model_file)
 
 	# Removing borders
 	lx,ly = data.shape[1],data.shape[2]

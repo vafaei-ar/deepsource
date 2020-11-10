@@ -34,16 +34,15 @@ _Python library for _
 
 
 **Citing DeepSource:** 
-```
-@article{Sadr:2018mud,
-      author         = "Sadr, A. Vafaei and Vos, Etienne.E. and Bassett, Bruce A.
-                        and Hosenie, Zafiirah and Oozeer, N. and Lochner,
-                        Michelle",
-      title          = "{DeepSource: Point Source Detection using Deep Learning}",
-      year           = "2018",
-      eprint         = "1807.02701",
-      archivePrefix  = "arXiv",
-      primaryClass   = "astro-ph.IM",
-      SLACcitation   = "%%CITATION = ARXIV:1807.02701;%%"
+```  
+@article{vafaei2019deepsource,
+      title={DEEPSOURCE: point source detection using deep learning},
+      author={Vafaei Sadr, A and Vos, Etienne E and Bassett, Bruce A and Hosenie, Zafiirah and Oozeer, N and Lochner, Michelle},
+      journal={Monthly Notices of the Royal Astronomical Society},
+      volume={484},
+      number={2},
+      pages={2793--2806},
+      year={2019},
+      publisher={Oxford University Press}
 }
 ```
